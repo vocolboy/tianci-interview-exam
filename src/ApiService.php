@@ -23,6 +23,7 @@ class ApiService
 
     /**
      * 創建訂單
+     * 使用 $this->client 去實作
      * 請參閱文件 『支付接口』
      *
      * 提交參數
