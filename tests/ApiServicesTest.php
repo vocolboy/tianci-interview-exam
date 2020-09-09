@@ -30,17 +30,17 @@ class ApiServicesTest extends TestCase
         $history = Middleware::history($this->container);
 
         $handlerStack = HandlerStack::create(new MockHandler([
-            new Response(200, ['Content-Type' => 'application/json'], json_encode([
-                "data" => [
-                    "trade_no" => "5ec94526-18b3-43e3-966a-02bf0b7b2b37",
-                    "out_trade_no" => "2014072300007148",
-                    "amount" => "50000",
-                    "uri" => "https://test.com/xxx",
-                    "qrcode" => "",
-                ],
-                "success" => true,
-            ])),
-        ]));
+                    new Response(200, ['Content-Type' => 'application/json'], json_encode([
+                                "data" => [
+                                    "trade_no" => "5ec94526-18b3-43e3-966a-02bf0b7b2b37",
+                                    "out_trade_no" => "2014072300007148",
+                                    "amount" => "50000",
+                                    "uri" => "https://test.com/xxx",
+                                    "qrcode" => "",
+                                ],
+                                "success" => true,
+                            ])),
+                ]));
 
         $handlerStack->push($history);
 
@@ -72,14 +72,14 @@ class ApiServicesTest extends TestCase
                     'out_trade_no' => '2014072300007148',
                 ],
             ], [
-                'method' => $request->getMethod(),
-                'uri' => sprintf('%s://%s%s', $uri->getScheme(), $uri->getHost(), $uri->getPath()),
-                'headers' => [
-                    'content-type' => $request->getHeader('Content-Type')[0] ?? '',
-                    'authorization' => $request->getHeader('Authorization')[0] ?? '',
-                ],
-                'json' => json_decode($request->getBody()->getContents(), JSON_UNESCAPED_SLASHES),
-            ]);
+                    'method' => $request->getMethod(),
+                    'uri' => sprintf('%s://%s%s', $uri->getScheme(), $uri->getHost(), $uri->getPath()),
+                    'headers' => [
+                        'content-type' => $request->getHeader('Content-Type')[0] ?? '',
+                        'authorization' => $request->getHeader('Authorization')[0] ?? '',
+                    ],
+                    'json' => json_decode($request->getBody()->getContents(), JSON_UNESCAPED_SLASHES),
+                ]);
         }
     }
 
@@ -98,22 +98,52 @@ class ApiServicesTest extends TestCase
         return [
             [
                 json_encode([
-                    "trade_no" => "fdd49c43-e1c1-49da-9d23-8027f5412fe6",
-                    "amount" => "300.00",
-                    "out_trade_no" => "lt0085DB4AE5444B_60509043_112159",
-                    "state" => "completed",
-                    "sign" => "a74497ea751692f829fd139ebb39111e",
-                ]),
+                        "trade_no" => "fdd49c43-e1c1-49da-9d23-8027f5412fe6",
+                        "amount" => "300.00",
+                        "out_trade_no" => "lt0085DB4AE5444B_60509043_112159",
+                        "state" => "completed",
+                        "sign" => "a74497ea751692f829fd139ebb39111e",
+                    ]),
                 true,
             ],
             [
                 json_encode([
-                    "trade_no" => "fdd49c43-e1c1-49da-9d23-8027f5412fe5",
-                    "amount" => "300.00",
-                    "out_trade_no" => "lt0085DB4AE5444B_60509043_112159",
-                    "state" => "completed",
-                    "sign" => "a74497ea751692f829fd139ebb39111e",
-                ]),
+                        "trade_no" => "fdd49c43-e1c1-49da-9d23-8027f5412fe5",
+                        "amount" => "300.00",
+                        "out_trade_no" => "lt0085DB4AE5444B_60509043_112159",
+                        "state" => "completed",
+                        "sign" => "a74497ea751692f829fd139ebb39111e",
+                    ]),
+                false,
+            ],
+            [
+                json_encode([
+                        "trade_no" => "fdd49c43-e1c1-49da-9d23-8027f5412fe5",
+                        "amount" => "300.00",
+                        "out_trade_no" => "lt0085DB4AE5444B_60509043_112159",
+                        "state" => "completed",
+                        "sign" => "a74497ea751692f829fd139ebb39111e",
+                    ]),
+                false,
+            ],
+            [
+                json_encode([
+                        "trade_no" => '4c21cca6-c95e-45b5-a673-3d38897d898b',
+                        "amount" => "3000.00",
+                        "out_trade_no" => "aSEr3x4YGBgiKQRr",
+                        "state" => "completed",
+                        "sign" => "b17feaf71b5f9fdae825cfae27ba2931",
+                    ]),
+                true,
+            ],
+            [
+                json_encode([
+                        "trade_no" => 'f81e15b9-8949-414c-a3a9-086e11a3fab4',
+                        "amount" => "3000.00",
+                        "out_trade_no" => "tUp5ndVH7E0xh2dZ",
+                        "state" => "completed",
+                        "sign" => "7903bd2aaa185616a3eeaf4a8b11ab2f",
+                    ]),
                 false,
             ],
         ];
