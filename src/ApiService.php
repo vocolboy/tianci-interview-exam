@@ -33,7 +33,17 @@ class ApiService
      */
     public function createNewTransaction()
     {
-
+        $this->client->post('https://vn.tianci2020.com/api/transaction', [
+            'headers' => [
+                'content-type' => 'application/json',
+                'authorization' => 'Bearer InK5dzc9cDxLjJxp8AOdFqU1yv8tiIiKcJJSqQoaML2nI1nzVhQBhXSq2a9C',
+            ],
+            'json' => [
+                'amount' => 10000,
+                'callback_url' => 'https://example.com',
+                'out_trade_no' => '2014072300007148',
+            ],
+        ]);
     }
 
     /**
@@ -48,6 +58,21 @@ class ApiService
      */
     public function callbackDataVerify(string $jsonString)
     {
+        $apiToken = 'InK5dzc9cDxLjJxp8AOdFqU1yv8tiIiKcJJSqQoaML2nI1nzVhQBhXSq2a9C';
+        $notifyToken = 'PbB3MVLoWn6Ldw38mC9R1Q6fSKSRwQurJdipnAYPjMcmEifhwQJhotPKGK8S';
 
+        $params = json_decode($jsonString, true);
+        $sign = $params['sign'];
+        unset($params['sign']);
+        ksort($params);
+
+        $preSignContent = '';
+        foreach ($params as $key => $value) {
+            $preSignContent .= "$key=$value&";
+        }
+
+        $preSignContent = substr($preSignContent, 0, -1);
+
+        return md5($preSignContent.$apiToken.$notifyToken) == $sign;
     }
 }
