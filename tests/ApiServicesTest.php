@@ -61,7 +61,7 @@ class ApiServicesTest extends TestCase
             $uri = $request->getUri();
             $this->assertEquals([
                 'method' => 'POST',
-                'uri' => 'https://vn.tianci2020.com/api/transactions',
+                'uri' => 'https://vn.tianci2020.com/api/transaction',
                 'headers' => [
                     'content-type' => 'application/json',
                     'authorization' => 'Bearer InK5dzc9cDxLjJxp8AOdFqU1yv8tiIiKcJJSqQoaML2nI1nzVhQBhXSq2a9C',
