@@ -37,7 +37,7 @@ class ApiService
     }
 
     /**
-     * 驗證傳入資料是否合法 並回傳 true or false
+     * 驗證傳入資料 sign 是否合法 並回傳 true or false
      * 請參閱文件 『回調說明』
      *
      * 傳入字串範例
